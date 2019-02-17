@@ -12,14 +12,51 @@ class OvalDraw extends Oval {
         super(positionXIn, positionYIn, widthIn, heightIn);
     }
 
+
     public void paintComponent(Graphics g) {
         g.drawOval(getPositionX(), getPositionY(), getWidth(), getHeight());
+        System.out.format("OvalDraw.paintComponent(x=%d, y=%d, w=%d, h=%d)\n",
+            getPositionX(), getPositionY(), getWidth(), getHeight());
     }
 }
-class SadCyclopsPanel extends JPanel {
+
+class SadCyclopseFace extends OvalDraw {
+    private OvalDraw eye;
+
+    public SadCyclopseFace() {
+        super(0,0,0,0);
+        eye = new OvalDraw(10,10,100,100);    
+    }
+
+    public SadCyclopseFace(int positionXIn, int positionYIn, int widthIn, int heightIn) {
+        super(positionXIn, positionYIn, widthIn, heightIn);
+        eye = new OvalDraw(10,10,100,100); 
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawOval(100,100,80,120);
+        eye.paintComponent(g);
+
+    } 
+}
+
+
+class SadCyclopsPanel extends JPanel {
+    private OvalDraw myOvalDraw;
+    private SadCyclopseFace mySadCyclopsFace;
+
+    public SadCyclopsPanel() {
+        myOvalDraw = new OvalDraw(200,200,160,240);
+        mySadCyclopsFace = new SadCyclopseFace(100,100,80,160);
+
+    }
+
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        myOvalDraw.paintComponent(g);
+        mySadCyclopsFace.paintComponent(g);
+
 
     }
 }
